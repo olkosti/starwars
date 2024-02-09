@@ -19,18 +19,24 @@
                 <div class="questions__body">
                     <select name="select" class="questions__select">
                         <option value="people">Люди</option>
-                        <option value="planets">Планеты</option>
                         <option value="films">Фильмы</option>
+                        <option value="planets">Планеты</option>
+                        <option value="species">Виды</option>
+                        <option value="starships">Космические корабли</option>
+                        <option value="vehicles">Транспортные средства</option>
                     </select>
-                    <input type="number" class="questions__number" placeholder="Введите номер">
+                    <input type="number" min="1" max="10" class="questions__number" placeholder="Введите номер">
                     <input type="button" type="submit" value="Вперед!" class="questions__btn">
                 </div>
-
-                <div class="image">
-                    <img src="style/img/Yoda.png" alt="Yoda">
-                </div>
             </section>
-
+            <!-- Блок вывода информации -->
+            <section class="answer">
+                <div class="loader"></div>
+                <div class="answer__body"></div>
+            </section>
+            <div class="image">
+                <img src="style/img/Yoda.png" alt="Yoda">
+            </div>
         </main>
 
 
