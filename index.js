@@ -3,6 +3,7 @@ const inputSelect = document.querySelector('.questions__select'); //выбор
 const inputNumber = document.querySelector('.questions__number'); //номер
 const button = document.querySelector('.questions__btn'); //кнопка
 const loader = document.querySelector('.loader');
+const API_URL = 'https://swapi.nomoreparties.co/';
 
 // скрываем лоадер по умолчанию
 loader.hidden = true;
@@ -10,18 +11,19 @@ loader.hidden = true;
 //функция вывода информации
 function addAnswer() {
     loader.hidden = false;
-    fetch(`https://swapi.nomoreparties.co/${inputSelect.value}/${inputNumber.value}`)
+    fetch(API_URL + inputSelect.value + '/' + inputNumber.value)
 
-    .then((response) => response.json())
+    .then((response) => {
+        if (!response.ok) {
+            answerElement.classList.add('error');    
+            loader.hidden = true;              
+            throw new Error('Упс...В вашем запросе ошибка, данные не найдены');             
+        }
+        return response.json()
+    })
     .then((data) => {
         console.log(data);
-        loader.hidden = true;
-
-        if (data.detail === 'Not Found' || inputNumber.value === '' || inputNumber.value > 10) {
-            answerElement.classList.add('error');
-            Promise.reject(data);
-            throw new Error('Not Found')
-        }
+        loader.hidden = true; 
         answerElement.classList.remove('error');
 
         if (inputSelect.value === 'films') {
@@ -31,7 +33,7 @@ function addAnswer() {
         }
     })
     .catch((error) => {
-        answerElement.textContent = `Возникла ошибка: ${error.message}`;
+        answerElement.textContent = `Error: ${error.message}`;
         console.error('Ошибка:', error.message);
     });
 }
